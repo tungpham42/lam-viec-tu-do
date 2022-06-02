@@ -1,0 +1,5 @@
+dbModule.node_view:
+  path: '/node/{node}'
+  defaults:
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,5 @@
+nodeCounter.settings:
+  path: '/node/{node}'
+  defaults:
+  requirements:
+    _permission: 'access content'

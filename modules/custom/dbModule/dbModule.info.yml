@@ -1,0 +1,5 @@
+name: 'dbModule'
+type: module
+description: 'Custom node view'
+core: 8.x
+package: 'Custom'

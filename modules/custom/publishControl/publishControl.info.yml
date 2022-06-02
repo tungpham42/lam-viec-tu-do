@@ -1,0 +1,5 @@
+name: 'publishControl'
+type: module
+description: 'Publish Control'
+core: 8.x
+package: 'Custom'

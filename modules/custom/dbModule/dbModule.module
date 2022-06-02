@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Logs and displays content statistics for a site.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_view() for node entities.
+ */
+function dbModule_node_view(array &$build, EntityInterface $node, EntityViewDisplayInterface $display, $view_mode) {
+    $bundle = $node->bundle();
+    //$body = $node->get('body')->getString();
+ 
+    // Add more markup/html.
+    $customText = $node->getTitle();
+    $build['dbModule_markup'] = array(
+        '#markup' => '<h1>'.$customText.'</h1>',
+        '#prefix' => '<div class="addition-text-markup">',
+        '#suffix' => '</div>'
+    );
+    $build['dbModule_container'] = array(
+        '#type' => 'container',
+        '#prefix' => '<div class="addition-text-container">',
+        '#suffix' => '</div>'
+    );
+}

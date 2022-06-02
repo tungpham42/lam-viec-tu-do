@@ -1,0 +1,9 @@
+# Schema for the views plugins of the Statistics module.
+
+views.field.nodeCounter_numeric:
+  type: views.field.numeric
+  label: 'Numeric values from the nodeCounter module'
+
+views.field.node_counter_timestamp:
+  type: views.field.date
+  label: 'The most recent time the node has been viewed'

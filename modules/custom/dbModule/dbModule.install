@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * @file
+ * Install and update functions for the dbModule module.
+ */
+
+function dbModule_install() {
+  // Set the weight to 1.
+  module_set_weight('dbModule', 1);
+}
+
+/**
+ * Implements hook_schema().
+ */
+function dbModule_schema() {
+  $schema['node_views_counter'] = [
+    'description' => 'Access dbModule for {node}s.',
+    'fields' => [
+      'nid' => [
+        'description' => 'The {node}.nid for these dbModule.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'uid' => [
+        'description' => 'The {node}.uid for these dbModule.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'totalcount' => [
+        'description' => 'The total number of times the {node} has been viewed.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'big',
+      ],
+      'daycount' => [
+        'description' => 'The total number of times the {node} has been viewed today.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'medium',
+      ],
+      'timestamp' => [
+        'description' => 'The most recent time the {node} has been viewed.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['nid'],
+    'foreign keys' => [
+      'node_author' => [
+        'table' => 'node_author',
+        'columns' => [
+          'uid' => 'uid',
+        ],
+        'on update' => 'cascade',
+        'on delete' => 'set null',
+      ],
+      'node_revision' => [
+        'table' => 'node_revision',
+        'columns' => [
+          'vid' => 'vid',
+        ],
+        'on update' => 'cascade',
+        'on delete' => 'set null',
+      ],
+    ],
+  ];
+
+  return $schema;
+}

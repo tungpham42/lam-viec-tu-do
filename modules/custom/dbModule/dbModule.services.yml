@@ -1,0 +1,6 @@
+services:
+  dbModule.storage.node:
+    class: Drupal\dbModule\NodeViewsStatisticsDatabaseStorage
+    arguments: ['@database', '@state', '@request_stack']
+    tags:
+      - { name: backend_overridable }

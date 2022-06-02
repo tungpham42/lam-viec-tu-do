@@ -1,0 +1,7 @@
+publishControl.publish_form:
+  path: '/publish-control'
+  defaults:
+    _form: 'Drupal\publishControl\Form\PublishControlForm'
+    _title: 'Control publishing options'
+  requirements:
+    _permission: 'administer publishControl'

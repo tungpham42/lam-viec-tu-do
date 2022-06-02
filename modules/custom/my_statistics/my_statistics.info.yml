@@ -1,0 +1,9 @@
+name: 'My Statistics'
+type: module
+description: 'My custom stats.'
+package: Custom
+version: VERSION
+core: 8.x
+configure: my_statistics.settings
+dependencies:
+  - drupal:node

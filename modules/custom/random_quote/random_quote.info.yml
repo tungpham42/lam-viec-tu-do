@@ -1,0 +1,7 @@
+name: 'My Random Quote'
+type: module
+description: Defines a random quote block.
+core: 8.x
+package: Custom
+dependencies:
+  - block

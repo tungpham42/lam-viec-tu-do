@@ -1,0 +1,4 @@
+administer nodeCounter:
+  title: 'Administer nodeCounter'
+view post access counter:
+  title: 'View content hits'

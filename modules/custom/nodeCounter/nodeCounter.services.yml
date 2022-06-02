@@ -1,0 +1,6 @@
+services:
+  nodeCounter.storage.node:
+    class: Drupal\nodeCounter\NodeCounterDatabaseStorage
+    arguments: ['@database', '@state', '@request_stack']
+    tags:
+      - { name: backend_overridable }

@@ -1,0 +1,5 @@
+name: 'tungModule'
+type: module
+description: 'Custom Settings Form'
+core: 8.x
+package: 'Custom'

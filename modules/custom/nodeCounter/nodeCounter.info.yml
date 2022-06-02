@@ -1,0 +1,9 @@
+name: nodeCounter
+type: module
+description: 'Custom node counter.'
+package: Custom
+version: VERSION
+core: 8.x
+configure: nodeCounter.settings
+dependencies:
+  - drupal:node

@@ -1,0 +1,6 @@
+services:
+  my_statistics.storage.node:
+    class: Drupal\my_statistics\NodeStatisticsDatabaseStorage
+    arguments: ['@database', '@state', '@request_stack']
+    tags:
+      - { name: backend_overridable }

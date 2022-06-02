@@ -1,0 +1,8 @@
+drupal.nodeCounter:
+  version: VERSION
+  js:
+    nodeCounter.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

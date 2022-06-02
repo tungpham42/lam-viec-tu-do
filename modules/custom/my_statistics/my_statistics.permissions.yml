@@ -1,0 +1,4 @@
+administer my_statistics:
+  title: 'Administer my_statistics'
+view post access counter:
+  title: 'View content hits'
