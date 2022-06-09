@@ -2,7 +2,7 @@
 
 namespace Drupal\random_quote;
 
-class Quote {
+class Quote implements QuoteInterface {
     public function getQuote() {
 	    try {
             $url = 'https://movies-quotes.p.rapidapi.com/quote';
