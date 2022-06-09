@@ -1,9 +1,8 @@
 <?php
 
 namespace Drupal\random_quote;
-use Drupal\random_quote\Service\PickRandomQuoteInterface;
 
-class Quote implements PickRandomQuoteInterface {
+class Quote {
     public function getQuote() {
 	    try {
             $url = 'https://movies-quotes.p.rapidapi.com/quote';

@@ -7,8 +7,6 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 
-use Drupal\random_quote\Quote;
-
 /**
  * Provides a block with a simple text.
  *
@@ -22,8 +20,7 @@ class RandomQuoteBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    $quote = new Quote;
-    $body_result = \Drupal::service('random_quote.get_quote')->getQuote($quote);
+    $body_result = \Drupal::service('random_quote.get_quote')->getQuote();
 
     $quote = $body_result['quote'];
     $character = $body_result['character'];
