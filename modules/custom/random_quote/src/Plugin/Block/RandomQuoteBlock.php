@@ -20,17 +20,18 @@ class RandomQuoteBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    $result = \Drupal::service('random_quote.get_quote')->getQuote();
-
-    $quote = $result['quote'];
-    $character = $result['character'];
-    $show = $result['show'];
+    $json_response = \Drupal::service('random_quote.get_quote')->getContentResponse();
+    $result = json_decode($json_response, true);
+    $quote = $result['content'];
+    $quoteUrl = $result['url'];
+    $originator = $result['originator'];
+    $author = $originator['name'];
+    $authorUrl = $originator['url'];
 
     return [
-      '#markup' =>  '<h2>Random movie quote</h2>'.
-                    '<blockquote>'.$quote.'</blockquote>'.
-                    '<p>Character: '.$character.'</p>'.
-                    '<p>Show: '.$show.'</p>',
+      '#markup' =>  '<h2>Random quote</h2>'.
+                    '<a target="_blank" href="'.$quoteUrl.'"><blockquote>'.$quote.'</blockquote></a>'.
+                    '<a target="_blank" href="'.$authorUrl.'"><p>Author: '.$author.'</p></a>',
     ];
   }
 

@@ -1,0 +1,7 @@
+random_quote.settings:
+  path: '/admin/config/system/my-random-quote'
+  defaults:
+    _form: '\Drupal\random_quote\Form\QuoteSettingsForm'
+    _title: 'My Random Quote'
+  requirements:
+    _permission: 'administer random_quote'

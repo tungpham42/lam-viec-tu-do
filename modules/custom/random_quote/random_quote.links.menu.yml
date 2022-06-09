@@ -1,0 +1,6 @@
+random_quote.settings:
+  title: 'My Random Quote'
+  description: 'Configure my random quote.'
+  route_name: random_quote.settings
+  parent: system.admin_config_system
+  weight: -17
