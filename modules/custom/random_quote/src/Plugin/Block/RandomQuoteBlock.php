@@ -7,12 +7,14 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 
+use Drupal\random_quote\Quote;
+
 /**
  * Provides a block with a simple text.
  *
  * @Block(
  *   id = "random_quote_example_block",
- *   admin_label = @Translation("Randome quote block"),
+ *   admin_label = @Translation("Random quote block"),
  * )
  */
 class RandomQuoteBlock extends BlockBase {
@@ -20,18 +22,7 @@ class RandomQuoteBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    $url = "https://movies-quotes.p.rapidapi.com/quote";
-    $client = \Drupal::httpClient();
-    $response = $client->request('GET', $url, [
-      'headers' => [
-        'X-RapidAPI-Host' => 'movies-quotes.p.rapidapi.com',
-        'X-RapidAPI-Key' => 'OvEezA3997msh66qZgNJ66YsAWs0p13mlOMjsnO4L2P0BG7sM4',
-      ]
-    ]);
-    $body = $response->getBody()->getContents();
-    $status = $response->getStatusCode();
-    
-    $body_result = json_decode($body, true);
+    $body_result = Quote::getQuote();
 
     $quote = $body_result['quote'];
     $character = $body_result['character'];
