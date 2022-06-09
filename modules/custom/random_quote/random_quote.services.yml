@@ -1,3 +1,4 @@
 services:
   random_quote.get_quote:
-    class: Drupal\random_quote\Service\PickRandomQuote
+    class: Drupal\random_quote\Quote
+    arguments: ['random_quote']

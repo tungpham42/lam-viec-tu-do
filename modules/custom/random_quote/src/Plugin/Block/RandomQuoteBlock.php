@@ -22,7 +22,8 @@ class RandomQuoteBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    $body_result = Quote::getQuote();
+    $quote = new Quote;
+    $body_result = \Drupal::service('random_quote.get_quote')->getQuote($quote);
 
     $quote = $body_result['quote'];
     $character = $body_result['character'];
