@@ -7,4 +7,6 @@ interface QuoteInterface {
     public function testResponse();
 
     public function getContentResponse();
+
+    public function getBodyName();
 }

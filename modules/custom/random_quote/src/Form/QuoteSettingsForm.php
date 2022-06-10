@@ -73,18 +73,25 @@ class QuoteSettingsForm extends ConfigFormBase {
             '#default_value' => \Drupal::config('random_quote.settings')->get('url'),
             '#required' => TRUE,
         ];
+        $form['x_rapidapi_key'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Rapid API Key'),
+            '#description' => $this->t('Enter the Rapid API Key.'),
+            '#default_value' => \Drupal::config('random_quote.settings')->get('x_rapidapi_key'),
+            '#required' => TRUE,
+        ];
         $form['x_rapidapi_host'] = [
             '#type' => 'textfield',
-            '#title' => $this->t('x_rapidapi_host'),
+            '#title' => $this->t('Rapid API Host'),
             '#description' => $this->t('Enter the Rapid API Host.'),
             '#default_value' => \Drupal::config('random_quote.settings')->get('x_rapidapi_host'),
             '#required' => TRUE,
         ];
-        $form['x_rapidapi_key'] = [
+        $form['body_name'] = [
             '#type' => 'textfield',
-            '#title' => $this->t('x_rapidapi_key'),
-            '#description' => $this->t('Enter the Rapid API Key.'),
-            '#default_value' => \Drupal::config('random_quote.settings')->get('x_rapidapi_key'),
+            '#title' => $this->t('JSON body name'),
+            '#description' => $this->t('Enter the JSON body name.'),
+            '#default_value' => \Drupal::config('random_quote.settings')->get('body_name'),
             '#required' => TRUE,
         ];
 
@@ -116,13 +123,17 @@ class QuoteSettingsForm extends ConfigFormBase {
             // Set an error for the form element with a key of "url".
             $form_state->setErrorByName('url', $this->t('The URL cannot be empty.'));
         }
+        if ($form_state->getValue('x_rapidapi_key') == '') {
+            // Set an error for the form element with a key of "x_rapidapi_key".
+            $form_state->setErrorByName('x_rapidapi_key', $this->t('The Rapid API Key cannot be empty.'));
+        }
         if ($form_state->getValue('x_rapidapi_host') == '') {
             // Set an error for the form element with a key of "x_rapidapi_host".
             $form_state->setErrorByName('x_rapidapi_host', $this->t('The Rapid API Host cannot be empty.'));
         }
-        if ($form_state->getValue('x_rapidapi_key') == '') {
+        if ($form_state->getValue('body_name') == '') {
             // Set an error for the form element with a key of "x_rapidapi_key".
-            $form_state->setErrorByName('x_rapidapi_key', $this->t('The Rapid API Key cannot be empty.'));
+            $form_state->setErrorByName('body_name', $this->t('The JSON body name cannot be empty.'));
         }
 
     }
@@ -132,12 +143,14 @@ class QuoteSettingsForm extends ConfigFormBase {
      */
     public function submitForm(array &$form, FormStateInterface $form_state) {
         \Drupal::configFactory()->getEditable('random_quote.settings')->set('url', $form_state->getValue('url'))->save();
-        \Drupal::configFactory()->getEditable('random_quote.settings')->set('x_rapidapi_host', $form_state->getValue('x_rapidapi_host'))->save();
         \Drupal::configFactory()->getEditable('random_quote.settings')->set('x_rapidapi_key', $form_state->getValue('x_rapidapi_key'))->save();
+        \Drupal::configFactory()->getEditable('random_quote.settings')->set('x_rapidapi_host', $form_state->getValue('x_rapidapi_host'))->save();
+        \Drupal::configFactory()->getEditable('random_quote.settings')->set('body_name', $form_state->getValue('body_name'))->save();
         $messenger = \Drupal::messenger();
         $messenger->addMessage('URL: ' . $form_state->getValue('url'));
-        $messenger->addMessage('Rapid API Host: ' . $form_state->getValue('x_rapidapi_host'));
         $messenger->addMessage('Rapid API Key: ' . $form_state->getValue('x_rapidapi_key'));
+        $messenger->addMessage('Rapid API Host: ' . $form_state->getValue('x_rapidapi_host'));
+        $messenger->addMessage('JSON body name: ' . $form_state->getValue('body_name'));
     }
 
 }

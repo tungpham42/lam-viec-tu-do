@@ -58,15 +58,10 @@ class RandomQuoteBlock extends BlockBase implements ContainerFactoryPluginInterf
   public function build() {
     $json_response = $this->quoteService->getContentResponse();
     $result = json_decode($json_response, true);
-    $quote = $result['content'];
-    $quoteUrl = $result['url'];
-    $originator = $result['originator'];
-    $author = $originator['name'];
-    $authorUrl = $originator['url'];
+    $quote = $result[$this->quoteService->getBodyName()];
 
     return [
-      '#markup' =>  '<a target="_blank" href="'.$quoteUrl.'"><blockquote>'.$quote.'</blockquote></a>'.
-                    '<a target="_blank" href="'.$authorUrl.'"><p>Author: '.$author.'</p></a>',
+      '#markup' => '<blockquote>'.$quote.'</blockquote>',
     ];
   }
 

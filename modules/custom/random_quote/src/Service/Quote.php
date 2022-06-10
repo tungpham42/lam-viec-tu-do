@@ -31,6 +31,13 @@ class Quote implements QuoteInterface {
     protected $url;
   
     /**
+     * The JSON body name.
+     *
+     * @var array|mixed|null
+     */
+    protected $bodyName;
+  
+    /**
      * The messenger service.
      *
      * @var \Drupal\Core\Messenger\MessengerInterface
@@ -56,6 +63,7 @@ class Quote implements QuoteInterface {
             'x-rapidapi-host' => $ramdomQuoteSettings->get('x_rapidapi_host'),
         ];
         $this->url = $ramdomQuoteSettings->get('url');
+        $this->bodyName = $ramdomQuoteSettings->get('body_name');
     }
 
     /**
@@ -91,6 +99,9 @@ class Quote implements QuoteInterface {
         catch (GuzzleException $e) {
         }
         return NULL;
+    }
+    public function getBodyName() {
+        return $this->bodyName;
     }
     // public function getQuote() {
 	//     try {
