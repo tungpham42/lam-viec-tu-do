@@ -6,6 +6,10 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\random_quote\Service\QuoteInterface;
 
 /**
  * Provides a block with a simple text.
@@ -15,12 +19,44 @@ use Drupal\Core\Session\AccountInterface;
  *   admin_label = @Translation("Random quote block"),
  * )
  */
-class RandomQuoteBlock extends BlockBase {
+class RandomQuoteBlock extends BlockBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The storage for random_quote.
+   *
+   * @var \Drupal\random_quote\QuoteInterface
+   */
+  protected $quoteService;
+
+  /**
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, QuoteInterface $quote_service, RendererInterface $renderer) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->quoteService = $quote_service;
+    $this->renderer = $renderer;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('random_quote.get_quote'),
+      $container->get('renderer')
+    );
+  }
+
   /**
    * {@inheritdoc}
    */
   public function build() {
-    $json_response = \Drupal::service('random_quote.get_quote')->getContentResponse();
+    $json_response = $this->quoteService->getContentResponse();
     $result = json_decode($json_response, true);
     $quote = $result['content'];
     $quoteUrl = $result['url'];
@@ -29,8 +65,7 @@ class RandomQuoteBlock extends BlockBase {
     $authorUrl = $originator['url'];
 
     return [
-      '#markup' =>  '<h2>Random quote</h2>'.
-                    '<a target="_blank" href="'.$quoteUrl.'"><blockquote>'.$quote.'</blockquote></a>'.
+      '#markup' =>  '<a target="_blank" href="'.$quoteUrl.'"><blockquote>'.$quote.'</blockquote></a>'.
                     '<a target="_blank" href="'.$authorUrl.'"><p>Author: '.$author.'</p></a>',
     ];
   }
