@@ -7,7 +7,6 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\random_quote\Service\QuoteInterface;
 
@@ -28,15 +27,9 @@ class RandomQuoteBlock extends BlockBase implements ContainerFactoryPluginInterf
    */
   protected $quoteService;
 
-  /**
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected $renderer;
-
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, QuoteInterface $quote_service, RendererInterface $renderer) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, QuoteInterface $quote_service) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->quoteService = $quote_service;
-    $this->renderer = $renderer;
   }
 
   /**
@@ -47,8 +40,7 @@ class RandomQuoteBlock extends BlockBase implements ContainerFactoryPluginInterf
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('random_quote.get_quote'),
-      $container->get('renderer')
+      $container->get('random_quote.get_quote')
     );
   }
 
