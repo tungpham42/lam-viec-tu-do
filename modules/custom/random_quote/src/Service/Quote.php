@@ -3,7 +3,6 @@
 namespace Drupal\random_quote\Service;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -36,13 +35,6 @@ class Quote implements QuoteInterface {
      * @var array|mixed|null
      */
     protected $bodyName;
-  
-    /**
-     * The messenger service.
-     *
-     * @var \Drupal\Core\Messenger\MessengerInterface
-     */
-    protected $messenger;
 
     /**
      * Constructs a RandomQuoteManager object.
@@ -51,12 +43,9 @@ class Quote implements QuoteInterface {
      *   The HTTP client.
      * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
      *   The config factory.
-     * @param \Drupal\Core\Messenger\MessengerInterface $messenger
-     *   The messenger service.
      */
-    public function __construct(ClientInterface $http_client, ConfigFactoryInterface $config_factory, MessengerInterface $messenger) {
+    public function __construct(ClientInterface $http_client, ConfigFactoryInterface $config_factory) {
         $this->httpClient = $http_client;
-        $this->messenger = $messenger;
         $ramdomQuoteSettings = $config_factory->get('random_quote.settings');
         $this->header = [
             'x-rapidapi-key' => $ramdomQuoteSettings->get('x_rapidapi_key'),
@@ -64,22 +53,6 @@ class Quote implements QuoteInterface {
         ];
         $this->url = $ramdomQuoteSettings->get('url');
         $this->bodyName = $ramdomQuoteSettings->get('body_name');
-    }
-
-    /**
-     * Test Connection of API.
-     */
-    public function testResponse() {
-        $param['headers'] = $this->header;
-        try {
-        $response = $this->httpClient->request('GET', $this->url, $param);
-        if ($response->getStatusCode() === 200) {
-            return TRUE;
-        }
-        }
-        catch (GuzzleException $e) {
-        }
-        return FALSE;
     }
 
     /**
@@ -100,26 +73,8 @@ class Quote implements QuoteInterface {
         }
         return NULL;
     }
+
     public function getBodyName() {
         return $this->bodyName;
     }
-    // public function getQuote() {
-	//     try {
-    //         $url = 'https://movies-quotes.p.rapidapi.com/quote';
-    //         $client = \Drupal::httpClient();
-    //         $response = $client->request('GET', $url, [
-    //             'headers' => [
-    //                 'X-RapidAPI-Host' => 'movies-quotes.p.rapidapi.com',
-    //                 'X-RapidAPI-Key' => 'OvEezA3997msh66qZgNJ66YsAWs0p13mlOMjsnO4L2P0BG7sM4',
-    //             ]
-    //         ]);
-    //         $body = $response->getBody()->getContents();
-    //         $status = $response->getStatusCode();
-    //         $result = json_decode($body, true);
-    //         return $result;
-    //     }
-    //     catch (RequestException $e) {
-    //         return FALSE;
-    //     }
-	// }
 }
