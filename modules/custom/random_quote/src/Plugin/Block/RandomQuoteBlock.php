@@ -54,6 +54,9 @@ class RandomQuoteBlock extends BlockBase implements ContainerFactoryPluginInterf
 
     return [
       '#markup' => '<blockquote>'.$quote.'</blockquote>',
+      '#cache' => [
+        'max-age' => 0,
+      ],
     ];
   }
 
