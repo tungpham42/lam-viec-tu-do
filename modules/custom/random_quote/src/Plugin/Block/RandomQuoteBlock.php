@@ -52,17 +52,23 @@ class RandomQuoteBlock extends BlockBase implements ContainerFactoryPluginInterf
    * {@inheritdoc}
    */
   public function build() {
+    // Initialise the block data.
+    $build = [];
+
+    // Do NOT cache a page with this block on it.
     \Drupal::service('page_cache_kill_switch')->trigger();
+    
     $json_response = $this->quoteService->getContentResponse();
     $result = json_decode($json_response, true);
     $quote = $result[$this->quoteService->getBodyName()];
 
-    return [
+    $build['content'] = [
       '#markup' => '<blockquote>'.$quote.'</blockquote>',
       '#cache' => [
         'max-age' => 0,
       ],
     ];
+    return $build;
   }
 
   /**
