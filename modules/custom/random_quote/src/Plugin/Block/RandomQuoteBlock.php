@@ -8,6 +8,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Cache\UncacheableDependencyTrait;
+
 use Drupal\random_quote\Service\QuoteInterface;
 
 /**
@@ -19,6 +21,8 @@ use Drupal\random_quote\Service\QuoteInterface;
  * )
  */
 class RandomQuoteBlock extends BlockBase implements ContainerFactoryPluginInterface {
+  
+  use UncacheableDependencyTrait;
 
   /**
    * The storage for random_quote.
@@ -48,6 +52,7 @@ class RandomQuoteBlock extends BlockBase implements ContainerFactoryPluginInterf
    * {@inheritdoc}
    */
   public function build() {
+    \Drupal::service('page_cache_kill_switch')->trigger();
     $json_response = $this->quoteService->getContentResponse();
     $result = json_decode($json_response, true);
     $quote = $result[$this->quoteService->getBodyName()];
