@@ -14,7 +14,7 @@ use Drupal\random_quote\Service\QuoteInterface;
  * Provides a block with a simple text.
  *
  * @Block(
- *   id = "random_quote_example_block",
+ *   id = "random_quote_block",
  *   admin_label = @Translation("Random quote block"),
  * )
  */
